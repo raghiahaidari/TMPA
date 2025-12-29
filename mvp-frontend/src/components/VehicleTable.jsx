@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import EditIcon from "@mui/icons-material/Edit";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -22,7 +23,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }));
 
-function VehicleTable({ vehicles, onDelete }) {
+function VehicleTable({ vehicles, onDelete, onEdit }) {
   if (!vehicles || vehicles.length === 0) {
     return (
       <Paper sx={{ mt: 4, p: 4, textAlign: "center" }}>
@@ -51,7 +52,7 @@ function VehicleTable({ vehicles, onDelete }) {
                 {col.replace("_", " ")}
               </TableCell>
             ))}
-            {onDelete && (
+            {(onDelete || onEdit) && (
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 Actions
               </TableCell>
@@ -65,17 +66,31 @@ function VehicleTable({ vehicles, onDelete }) {
               {columns.map((col) => (
                 <TableCell key={col}>{row[col]}</TableCell>
               ))}
-              {onDelete && (
+              {(onDelete || onEdit) && (
                 <TableCell align="center">
-                  <Tooltip title="Delete">
-                    <IconButton
-                      size="small"
-                      color="error"
-                      onClick={() => onDelete(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
+                  {onEdit && (
+                    <Tooltip title="Edit">
+                      <IconButton
+                        size="small"
+                        color="primary"
+                        onClick={() => onEdit(row)}
+                        sx={{ mr: onDelete ? 1 : 0 }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  {onDelete && (
+                    <Tooltip title="Delete">
+                      <IconButton
+                        size="small"
+                        color="error"
+                        onClick={() => onDelete(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </TableCell>
               )}
             </StyledTableRow>

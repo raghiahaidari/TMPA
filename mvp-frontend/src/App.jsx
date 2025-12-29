@@ -9,6 +9,7 @@ const API_URL = "http://localhost:8000"; // FastAPI backend
 
 function App() {
   const [vehicles, setVehicles] = useState([]);
+  const [vehicleToEdit, setVehicleToEdit] = useState(null);
 
   // Load vehicles from API
   const fetchVehicles = () => {
@@ -21,19 +22,35 @@ function App() {
     fetchVehicles();
   }, []);
 
+  // Handler after an update
+  const handleVehicleUpdated = () => {
+    fetchVehicles();
+    setVehicleToEdit(null); // Clear edit state
+  };
+
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
         Port Operations MVP Dashboard
       </Typography>
       <Box sx={{ my: 2 }}>
-        <AddVehicleForm apiUrl={API_URL} onVehicleAdded={fetchVehicles} />
+        <AddVehicleForm
+          apiUrl={API_URL}
+          onVehicleAdded={fetchVehicles}
+          vehicleToEdit={vehicleToEdit}
+          onVehicleUpdated={handleVehicleUpdated}
+          onCancelEdit={() => setVehicleToEdit(null)}
+        />
       </Box>
-      <VehicleTable vehicles={vehicles} onDelete={async (id) => {
-        if (!window.confirm("Delete this vehicle?")) return;
-        await fetch(`${API_URL}/vehicles/${id}`, { method: "DELETE" });
-        fetchVehicles();
-      }} />
+      <VehicleTable
+        vehicles={vehicles}
+        onDelete={async (id) => {
+          if (!window.confirm("Delete this vehicle?")) return;
+          await fetch(`${API_URL}/vehicles/${id}`, { method: "DELETE" });
+          fetchVehicles();
+        }}
+        onEdit={setVehicleToEdit}
+      />
     </Container>
   );
 }
