@@ -54,26 +54,4 @@
     - The app will be available at the localhost URL shown by Vite (ex: [http://localhost:5173](http://localhost:5173))
     - By default, it connects to the backend at [http://localhost:8000](http://localhost:8000)
 
----
 
-## Usage Workflow
-
-1. **Start the backend** (`uvicorn main:app --reload --port 8000`)
-2. **Start the frontend** (`npm run dev`)
-3. **Open the web app** ([http://localhost:5173](http://localhost:5173) or similar)
-4. **Add new vehicles** using the form in the UI
-    - All vehicle records are stored in the database via API (no CSV upload/import!)
-    - Vehicle table displays up-to-date database contents
-
----
-
-## Notes
-
-- No CSV dependencies remain: all vehicle data is entered and managed through the web UI and REST API.
-- For development or demo, SQLite DB is persisted as `vehicles.db` in the backend directory.
-- For production, consider a full database (PostgreSQL, MySQL, etc.) and proper user authentication.
-- For API schema details, explore the backend at [http://localhost:8000/docs](http://localhost:8000/docs).
-
----
-
-Enjoy your fully database-powered, modern fullstack MVP!
