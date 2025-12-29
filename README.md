@@ -13,7 +13,9 @@
 
     ```bash
     cd mvp-backend
-    source venv/bin/activate  # (if not already activated)
+    python3 -m venv venv
+    source venv/bin/activate     # for linux
+    venv\Scripts\Activate.ps1    # for windows
     pip install -r requirements.txt
     ```
 
@@ -53,5 +55,3 @@
 
     - The app will be available at the localhost URL shown by Vite (ex: [http://localhost:5173](http://localhost:5173))
     - By default, it connects to the backend at [http://localhost:8000](http://localhost:8000)
-
-
